@@ -1,4 +1,5 @@
-﻿name: Application CI
+﻿
+name: Application CI
 
 on:
   push:
@@ -28,3 +29,15 @@ jobs:
       - name: Run tests
         working-directory: app
         run: python -m unittest -v test_app.py
+
+  docker-build:
+    name: Build Docker image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t aws-devops-flask:ci -f docker/Dockerfile .
+
